@@ -1,6 +1,7 @@
+/.cvsignore/1.1/Mon Sep 22 22:53:53 2003//
 D/fb////
 D/x11////
-/.cvsignore/1.1/Tue Feb 17 14:48:35 2009//
-/Makefile.in/1.11/Thu May  5 04:56:24 2011//
-/w3mimg.c/1.6/Thu May  5 04:56:24 2011//
-/w3mimg.h/1.9/Thu May  5 04:56:24 2011//
+/Makefile.in/1.11/Tue Jan  4 09:22:28 2011//
+/w3mimg.c/1.6/Tue Jan  4 09:22:28 2011//
+/w3mimg.h/1.9/Tue Jan  4 09:22:28 2011//
+D/win////
