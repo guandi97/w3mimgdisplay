@@ -112,6 +112,8 @@ main(int argc, char **argv)
 	 *  5;  path            get size of image,
 	 *                      response "<width> <height>\n"
 	 *  6;  params(6)       clear image
+	 *  7;  gif: once
+         *  8;  gif: infinite
 	 *
 	 * params
 	 *      <n>;<x>;<y>;<w>;<h>;<sx>;<sy>;<sw>;<sh>;<path>
@@ -157,6 +159,14 @@ main(int argc, char **argv)
 	case '6':
 	    ClearImage(&buf[2]);
 	    break;
+	case '7':
+        	struct gif_info *gAnimate;
+        	gAnimate=malloc(sizeof(struct gif_info));
+		gif_animate(%buff[2],gAnimate,1);
+	case '8':
+        	struct gif_info *gAnimate;
+        	gAnimate=malloc(sizeof(struct gif_info));
+		gif_animate(%buff[2],gAnimate,0);
 	}
     }
     TermImage();
