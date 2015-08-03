@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 struct gif_info {
 	int xx;
@@ -9,15 +10,19 @@ struct gif_info {
 	int delay;	//milliseconds
 };
 
+
+int gifsicleSet(char*,struct gif_info*);
+int gif_animate(char*,struct gif_info*,int);
+
 //query all commands from gifsicle
 int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 	int pfd[2];
 	if(pipe(pfd)!=0) return 1;
 
-	if(fork() {
-		dup2(pdf[1],0);
+	if(fork()) {
+		dup2(pfd[1],0);
 
-		char **args=malloc(sizeof(sizeof(*char)*3);
+		char **args=malloc(sizeof(sizeof(char*)*3));
 		args[0]="gifsicle";
 		args[1]="-I";
 		args[2]=gif;
@@ -27,8 +32,9 @@ int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 		return 0;
 	}
 
-	char buf[2048];
-	wait();
+	char buff[2048];
+	int stat_lock;
+	wait(&stat_lock);
 	
 	int i=0;
 	while(!(i+=read(pfd[0],&buff,2048-i)));
@@ -36,10 +42,10 @@ int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 	{ 
 		for(int c=0;c<2;c++) while(buff[i++]!=' ');
 		int j=i;
-		while(buffi++]!=' ');
+		while(buff[i++]!=' ');
 
 		buff[i]=0;
-		gif_info->seq=atoi(&buff[j]);
+		gif_info_init->seq=atoi(&buff[j]);
 		buff[i]=' ';
 	}
 
@@ -56,13 +62,13 @@ int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 				int j=i;
 				while(buff[i++]!='x');
 				buff[i]=0;
-				gif_info->xx=atoi(buff[j]);
+				gif_info_init->xx=atoi(&buff[j]);
 				buff[i]='x';
 
 				j=++i;
-				while(buff[i++]!='\n';
+				while(buff[i++]!='\n');
 				buff[i]=0;
-				gif_info->yy=atoi(buff[j]);
+				gif_info_init->yy=atoi(&buff[j]);
 				buff[i]='\n';
 			}
 			
@@ -74,7 +80,7 @@ int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 				int j=i;
 				while(buff[i++]!='s');
 				buff[i]=0;
-				gif_info->delay=atoi(buff[j]);
+				gif_info_init->delay=atoi(&buff[j]);
 				buff[i]='s';
 				break;
 			}
@@ -88,7 +94,8 @@ int gifsicleSet(char *gif,struct gif_info *gif_info_init) {
 int gif_animate(char *gif,struct gif_info *gif_info_struct,int loop) {
 	return 0;
 }
-int exeGif(char *gif) {
+/*
+int execGif(char *gif) {
 	//0
 	DrawImage(gif,0);
 	//4 - mod
@@ -96,6 +103,7 @@ int exeGif(char *gif) {
 	//3
 	w_op->sync(w_op);
 }
+*/
 
 //test portion:
 int main(int argc, char **argv) {
@@ -103,7 +111,7 @@ int main(int argc, char **argv) {
 	struct gif_info *gAnimate;
 	gAnimate=malloc(sizeof(struct gif_info));
 	
-	if(i=gif_animate(*(argv+1),gAnimate)!=0) {
+	if(i=gif_animate(*(argv+1),gAnimate,0)!=0) {
 		return i;
 	}
 
