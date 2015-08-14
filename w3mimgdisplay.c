@@ -24,6 +24,8 @@ static void DrawImage(char *buf, int redraw);
 static void TermImage(void);
 static void ClearImage(char *buf);
 
+#include "icygif.h"
+
 int
 main(int argc, char **argv)
 {
@@ -112,13 +114,15 @@ main(int argc, char **argv)
 	 *  5;  path            get size of image,
 	 *                      response "<width> <height>\n"
 	 *  6;  params(6)       clear image
-	 *  7;  gif: once
-         *  8;  gif: infinite
+	 *  7;  gif		: once
+         *  8;  gif		: infinite
 	 *
 	 * params
 	 *      <n>;<x>;<y>;<w>;<h>;<sx>;<sy>;<sw>;<sh>;<path>
 	 * params(6)
 	 *      <x>;<y>;<w>;<h>
+	 * gif
+	 *      <n>;<x>;<y>;<w>;<h>;<sx>;<sy>;<sw>;<sh>;<path> //n->0 loop, >0 number of times loop
 	 *   
 	 */
 	switch (buf[0]) {
@@ -160,13 +164,24 @@ main(int argc, char **argv)
 	    ClearImage(&buf[2]);
 	    break;
 	case '7':
-        	struct gif_info *gAnimate;
-        	gAnimate=malloc(sizeof(struct gif_info));
-		gif_animate(%buff[2],gAnimate,1);
+		{
+		printf("single\n");
+        	gif_info *gAnimate;
+        	gAnimate=malloc(sizeof(gif_info));
+
+		int i;
+		if((i=gif_animate(&buf[2],gAnimate,1))) return i;
+		break;
+		}
 	case '8':
-        	struct gif_info *gAnimate;
-        	gAnimate=malloc(sizeof(struct gif_info));
-		gif_animate(%buff[2],gAnimate,0);
+		{
+        	gif_info *gAnimate;
+        	gAnimate=malloc(sizeof(gif_info));
+
+		int i;
+		if((i=gif_animate(&buf[2],gAnimate,0))) return i;
+		break;
+		}
 	}
     }
     TermImage();
